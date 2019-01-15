@@ -1,0 +1,12 @@
+commit b9a1fe2bedcdd69ed8be89480a52410b4f8857d4
+tree 1a0c25a16a95e209bbf527279322c24e80f0b4cc
+parent fa26c85df4ece33d4b0e13a474b6887dd3c3fa82
+author Andres Aristizabal <jaime.aristizabal.2508@gmail.com> 2019-01-15 10:02:24 -0500
+committer Andres Aristizabal <jaime.aristizabal.2508@gmail.com> 2019-01-15 10:02:24 -0500
+
+    agregue los argumentos del script de bash para poder tener desarrollo y
+    produccion en el mismo compu
+
+
+
+:100644 100644 a815e20b8c5d481c5b93e7a722c8fee8bbac1458 6119c3baddf96cee1378b82f98211872bb780444 M	Jenkinsfile

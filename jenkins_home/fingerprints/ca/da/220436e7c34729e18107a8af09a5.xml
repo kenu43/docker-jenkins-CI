@@ -1,0 +1,24 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<fingerprint>
+  <timestamp>2019-01-15 15:08:49.870 UTC</timestamp>
+  <original>
+    <name>docker-hub</name>
+    <number>18</number>
+  </original>
+  <md5sum>cada220436e7c34729e18107a8af09a5</md5sum>
+  <fileName>Docker image sha256:cada220436e7c34729e18107a8af09a5de7de1259140b9f4d473c619d302bca9</fileName>
+  <usages/>
+  <facets>
+    <org.jenkinsci.plugins.docker.commons.fingerprint.DockerAncestorFingerprintFacet plugin="docker-commons@1.13">
+      <timestamp>1547564929869</timestamp>
+      <imageId>sha256:cada220436e7c34729e18107a8af09a5de7de1259140b9f4d473c619d302bca9</imageId>
+      <usages>
+        <entry>
+          <string>docker-hub</string>
+          <ranges>18</ranges>
+        </entry>
+      </usages>
+      <ancestorImageIds class="sorted-set"/>
+    </org.jenkinsci.plugins.docker.commons.fingerprint.DockerAncestorFingerprintFacet>
+  </facets>
+</fingerprint>

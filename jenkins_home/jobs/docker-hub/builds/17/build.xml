@@ -1,0 +1,410 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.31">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-RemoteCause>
+            <addr>192.30.252.35</addr>
+          </hudson.model.Cause_-RemoteCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="workflow-cps-global-lib@2.12">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.ExecutionModelAction plugin="pipeline-model-definition@1.3.4.1">
+      <stagesUUID>3fe0ead7-bb9b-46d5-8fd5-c9fc394d40ae</stagesUUID>
+      <stagesList>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStages plugin="pipeline-model-api@1.3.4.1">
+          <stages>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <name>Cloning Git</name>
+              <branches>
+                <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                  <name>default</name>
+                  <steps>
+                    <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                      <name>checkout</name>
+                      <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                        <arguments class="linked-hash-map">
+                          <entry>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <key>scm</key>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-GStringValue>
+                              <value class="string">${scm}</value>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-GStringValue>
+                          </entry>
+                        </arguments>
+                      </args>
+                    </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                  </steps>
+                </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+              </branches>
+              <parallelContent/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <name>Building image</name>
+              <branches>
+                <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                  <name>default</name>
+                  <steps>
+                    <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                      <name>script</name>
+                      <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                        <arguments class="linked-hash-map">
+                          <entry>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <key>scriptBlock</key>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                              <value class="string">dockerImage = docker.build registry + &quot;:latest&quot;</value>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                          </entry>
+                        </arguments>
+                      </args>
+                    </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                  </steps>
+                </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+              </branches>
+              <parallelContent/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <name>Push Docker Image</name>
+              <branches>
+                <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                  <name>default</name>
+                  <steps>
+                    <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                      <name>script</name>
+                      <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                        <arguments class="linked-hash-map">
+                          <entry>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <key>scriptBlock</key>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                              <value class="string">docker.withRegistry(&apos;&apos;, registryCredential ) {
+                        dockerImage.push(&quot;${env.BUILD_NUMBER}&quot;)
+                        dockerImage.push(&quot;latest&quot;)
+                    }</value>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                          </entry>
+                        </arguments>
+                      </args>
+                    </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                  </steps>
+                </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+              </branches>
+              <parallelContent/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <name>Deploy Production</name>
+              <when>
+                <conditions>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTWhenExpression>
+                    <name>expression</name>
+                    <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                      <arguments class="linked-hash-map">
+                        <entry>
+                          <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                            <key>scriptBlock</key>
+                          </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                          <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                            <value class="string">return env.GIT_BRANCH == &quot;origin/master&quot;</value>
+                          </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                        </entry>
+                      </arguments>
+                    </args>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTWhenExpression>
+                </conditions>
+              </when>
+              <branches>
+                <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                  <name>default</name>
+                  <steps>
+                    <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                      <name>script</name>
+                      <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                        <arguments class="linked-hash-map">
+                          <entry>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <key>scriptBlock</key>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                              <value class="string">def remote = [:]
+                    remote.name = &apos;jenkins&apos;
+                    remote.host = host
+                    remote.user = user
+                    remote.password = password
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: &quot;./deploy_script.sh deploy-master-jenkins 3535&quot;</value>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                          </entry>
+                        </arguments>
+                      </args>
+                    </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                  </steps>
+                </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+              </branches>
+              <parallelContent/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <name>Deploy Development</name>
+              <when>
+                <conditions>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTWhenExpression>
+                    <name>expression</name>
+                    <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                      <arguments class="linked-hash-map">
+                        <entry>
+                          <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                            <key>scriptBlock</key>
+                          </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                          <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                            <value class="string">return env.GIT_BRANCH == &quot;origin/dev&quot;</value>
+                          </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                        </entry>
+                      </arguments>
+                    </args>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTWhenExpression>
+                </conditions>
+              </when>
+              <branches>
+                <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                  <name>default</name>
+                  <steps>
+                    <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                      <name>script</name>
+                      <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                        <arguments class="linked-hash-map">
+                          <entry>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <key>scriptBlock</key>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                            <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                              <value class="string">def remote = [:]
+                    remote.name = &apos;jenkins&apos;
+                    remote.host = host
+                    remote.user = user
+                    remote.password = password
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: &quot;./deploy_script.sh deploy-dev-jenkins 3536&quot;</value>
+                            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                          </entry>
+                        </arguments>
+                      </args>
+                    </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTScriptBlock>
+                  </steps>
+                </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+              </branches>
+              <parallelContent/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+          </stages>
+          <uuid>3fe0ead7-bb9b-46d5-8fd5-c9fc394d40ae</uuid>
+        </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStages>
+      </stagesList>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.ExecutionModelAction>
+    <hudson.plugins.git.util.BuildData plugin="git@3.9.1">
+      <buildsByBranchName>
+        <entry>
+          <string>refs/remotes/origin/master</string>
+          <hudson.plugins.git.util.Build>
+            <marked plugin="git-client@2.7.5">
+              <sha1>b9a1fe2bedcdd69ed8be89480a52410b4f8857d4</sha1>
+              <branches class="list">
+                <hudson.plugins.git.Branch>
+                  <sha1 reference="../../../sha1"/>
+                  <name>refs/remotes/origin/master</name>
+                </hudson.plugins.git.Branch>
+              </branches>
+            </marked>
+            <revision reference="../marked"/>
+            <hudsonBuildNumber>17</hudsonBuildNumber>
+          </hudson.plugins.git.util.Build>
+        </entry>
+      </buildsByBranchName>
+      <lastBuild reference="../buildsByBranchName/entry/hudson.plugins.git.util.Build"/>
+      <remoteUrls>
+        <string>https://github.com/andres2508/jenkins-helloworld.git</string>
+      </remoteUrls>
+    </hudson.plugins.git.util.BuildData>
+    <hudson.plugins.git.GitTagAction plugin="git@3.9.1">
+      <tags class="hudson.util.CopyOnWriteMap$Tree">
+        <entry>
+          <string>refs/remotes/origin/master</string>
+          <list/>
+        </entry>
+      </tags>
+      <ws>/var/jenkins_home/workspace/docker-hub</ws>
+    </hudson.plugins.git.GitTagAction>
+    <org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState plugin="workflow-scm-step@2.7">
+      <revisionStates>
+        <entry>
+          <string>git https://github.com/andres2508/jenkins-helloworld.git</string>
+          <hudson.scm.SCMRevisionState_-None/>
+        </entry>
+      </revisionStates>
+    </org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState>
+    <com.cloudbees.jenkins.plugins.bitbucket.FirstCheckoutCompletedInvisibleAction plugin="cloudbees-bitbucket-branch-source@2.3.0"/>
+    <org.jenkinsci.plugins.workflow.cps.EnvActionImpl plugin="workflow-cps@2.61.1">
+      <env class="tree-map"/>
+    </org.jenkinsci.plugins.workflow.cps.EnvActionImpl>
+    <org.jenkinsci.plugins.docker.commons.fingerprint.DockerFingerprintAction plugin="docker-commons@1.13">
+      <imageIDs>
+        <string>sha256:2a9eb03be2ca94bd6af951da0d494dbab89c59a406c34845d7ba14bb41d3ea9e</string>
+      </imageIDs>
+    </org.jenkinsci.plugins.docker.commons.fingerprint.DockerFingerprintAction>
+  </actions>
+  <queueId>33</queueId>
+  <timestamp>1547564667524</timestamp>
+  <startTime>1547564667548</startTime>
+  <result>SUCCESS</result>
+  <duration>40344</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>SUCCESS</result>
+    <script>pipeline {
+    environment {
+        registry = &quot;andres2508/docker-helloworld&quot;
+        repository = &apos;https://jaime2508@bitbucket.org/jaime2508/jenkins-helloworld.git&apos;
+        registryCredential = &apos;dockerhub&apos;
+        dockerImage = &apos;&apos;
+
+        // SSH Credentials
+        host = &apos;192.168.0.23&apos;
+        user = &apos;sdelosrios&apos;
+        password = &apos;4kidz&apos;
+    }
+    agent any
+    stages {
+        stage(&apos;Cloning Git&apos;) {
+            // Clona el repositorio -- En el que se encuentre el SCM
+            steps {
+                checkout scm
+            }
+        }
+        stage(&apos;Building image&apos;) {
+            steps{
+                script {
+                    dockerImage = docker.build registry + &quot;:latest&quot;
+                }
+            }
+        }
+        stage(&apos;Push Docker Image&apos;) {
+            steps{
+                script {
+                    docker.withRegistry(&apos;&apos;, registryCredential ) {
+                        dockerImage.push(&quot;${env.BUILD_NUMBER}&quot;)
+                        dockerImage.push(&quot;latest&quot;)
+                    }
+                }
+            }
+        }
+    
+        stage(&apos;Deploy Production&apos;) {
+            when {
+                expression {
+                    return env.GIT_BRANCH == &quot;origin/master&quot;
+                }
+            }
+            steps{
+                script {
+                    def remote = [:]
+                    remote.name = &apos;jenkins&apos;
+                    remote.host = host
+                    remote.user = user
+                    remote.password = password
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: &quot;./deploy_script.sh deploy-master-jenkins 3535&quot;
+                }
+            }
+        }
+
+        stage(&apos;Deploy Development&apos;) {
+            when {
+                expression {
+                    return env.GIT_BRANCH == &quot;origin/dev&quot;
+                }
+            }
+            steps{
+                script {
+                    def remote = [:]
+                    remote.name = &apos;jenkins&apos;
+                    remote.host = host
+                    remote.user = user
+                    remote.password = password
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: &quot;./deploy_script.sh deploy-dev-jenkins 3536&quot;
+                }
+            }
+        }
+    }
+}</script>
+    <loadedScripts class="map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>1954987600</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>1439801700</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>12813723700</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>176294700</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>2196308200</long>
+      </entry>
+    </timings>
+    <sandbox>true</sandbox>
+    <iota>68</iota>
+    <head>1:68</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList">
+    <org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+      <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <url>https://github.com/andres2508/jenkins-helloworld.git</url>
+            <credentialsId>GitHub_Credentials</credentialsId>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+          <hudson.plugins.git.BranchSpec>
+            <name>*/master</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions/>
+      </scm>
+      <node></node>
+      <workspace>/var/jenkins_home/workspace/docker-hub</workspace>
+      <changelogFile>/var/jenkins_home/jobs/docker-hub/builds/17/changelog0.xml</changelogFile>
+      <pollingBaseline class="hudson.scm.SCMRevisionState$None" reference="../../../actions/org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState/revisionStates/entry/hudson.scm.SCMRevisionState_-None"/>
+    </org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+    <org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+      <scm class="hudson.plugins.git.GitSCM" reference="../../org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout/scm"/>
+      <node></node>
+      <workspace>/var/jenkins_home/workspace/docker-hub</workspace>
+      <changelogFile>/var/jenkins_home/jobs/docker-hub/builds/17/changelog1.xml</changelogFile>
+      <pollingBaseline class="hudson.scm.SCMRevisionState$None" reference="../../../actions/org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState/revisionStates/entry/hudson.scm.SCMRevisionState_-None"/>
+    </org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+  </checkouts>
+</flow-build>
