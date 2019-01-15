@@ -1,2 +1,0 @@
-[Thu Jan 10 15:02:53 UTC 2019] Received Push event to branch master in repository andres2508/jenkins-helloworld UPDATED event from 192.30.253.29 ⇒ http://4642995c.ngrok.io:8080/github-webhook/ with timestamp Thu Jan 10 15:02:47 UTC 2019
-[Thu Jan 10 15:02:53 UTC 2019] Finished processing Push event to branch master in repository andres2508/jenkins-helloworld UPDATED event from 192.30.253.29 ⇒ http://4642995c.ngrok.io:8080/github-webhook/ with timestamp Thu Jan 10 15:02:47 UTC 2019. Matched 0.
